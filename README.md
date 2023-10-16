@@ -96,6 +96,15 @@ sudo systemctl enable httpd mariadb
 ```
 - Launch the Instance.
 
+**Allowing inbound traffic from the security group of EC2 instance to RDS Database (usually 3306).**
+- Head to EC2 then Security Groups and select the RDS Security Group that is created while launching the RDS database instance (e.g., "wp_database_sg").
+- Inbound rules and Edit inbound rules.
+- Delete any Previous rule and add new:
+   - Type: MYSQL/Aurora.
+   - Source: Custom.
+   - Choose your EC2 instance security group.
+- Save the rule.
+
 **Setting Up SSH to Access Your Server**
 
    - Open your preferred SSH client.
