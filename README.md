@@ -23,9 +23,10 @@ Installing WordPress on an EC2 Machine using RDS (MYSQL) as the Database.
    - Provide a database name in "DB instance identifier" (e.g., "wordpress").
    - Specify the Database master username and password.
    - Choose the instance type configuration from Standard, Memory optimized, or Burstable classes depending on your workload (only "Burstable classes" in the free tier).
+   - Configure Strorage type and volume size minimum is 20 GiB.
 
 - Connection Settings:
-   - For now, select "Don’t connect to an EC2 compute resource."
+   - Select "Don’t connect to an EC2 compute resource, For now."
    - Choose the network type as "IPV4."
    - Select the VPC in which you want your database to be launched (note that this cannot be changed while the database is running).
    - Set Public access to "No."
@@ -115,15 +116,15 @@ sudo systemctl enable httpd mariadb
 - In your terminal, enter the following command to set an environment variable for your MySQL host and connect to your database. Be sure to replace "<your-endpoint>" with the hostname 
   of your RDS instance and enter your master username and password. ("wordpress" in command is the database name) :
 ```bash
-mysql -h <your-endpoint> -u admin -p password wordpress
+mysql -h <your-endpoint> -u admin -p wordpress
 ```
 - Replace 'wpuser' and 'wppassword' with a secure username and password in the command:
 
 ```sql
-CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'wppassword';
-GRANT ALL PRIVILEGES ON * . * TO wpuser;
+CREATE USER 'wpuser' IDENTIFIED BY 'wppassword';
+GRANT ALL PRIVILEGES ON wordpress.* TO wpuser;
 FLUSH PRIVILEGES;
-exit;
+Exit
 ```
 **Making Wordpress default**
 
@@ -151,7 +152,7 @@ exit;
      sudo systemctl restart httpd
      ```
 
-Done, Now Access Your ss Installation & Set it up using Server Public IP Address.(Example: http://3-XXX-XX-235 use http not https)
+Done, Now Access Your ss Installation & Set it up using Server Public IP Address and in Database Host Paste the RDS Database Endpoint. (Example: http://3-XXX-XX-235 use http not https)
 
 **Installing SSL Certificate for ss**
 
